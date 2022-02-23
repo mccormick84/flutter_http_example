@@ -36,7 +36,7 @@ class _HttpApp extends State<HttpApp> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('HTTP Example'),
+        title: const Text('HTTP Example'),
       ),
       body: Center(
         child: data!.isEmpty
@@ -48,19 +48,30 @@ class _HttpApp extends State<HttpApp> {
             : ListView.builder(
                 itemBuilder: (context, index) {
                   return Card(
-                    child: Column(
+                    child: Row(
                       children: <Widget>[
-                        Text(data![index]['title'].toString()),
-                        Text(data![index]['authors'].toString()),
-                        Text(data![index]['sale_price'].toString()),
-                        Text(data![index]['status'].toString()),
                         Image.network(
                           data![index]['thumbnail'],
                           height: 100,
                           width: 100,
                           fit: BoxFit.contain,
+                        ),
+                        Column(
+                          children: <Widget>[
+                            Container(
+                              width: MediaQuery.of(context).size.width - 150,
+                              child: Text(
+                                data![index]['title'].toString(),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                            Text('저자: ${data![index]['authors'].toString()}'),
+                            Text('가격: ${data![index]['price'].toString()}'),
+                            Text('판매중: ${data![index]['status'].toString()}'),
+                          ],
                         )
                       ],
+                      mainAxisAlignment: MainAxisAlignment.start,
                     ),
                   );
                 },
